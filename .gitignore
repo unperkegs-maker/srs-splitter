@@ -1,0 +1,25 @@
+# === 実データの誤コミット防止（最優先） ===
+# 要求仕様書の実物(.docx)は絶対にコミットしない
+*.docx
+*.doc
+# 変換した実出力ディレクトリも除外（out/ を既定の出力先とする）
+out/
+output/
+
+# === サンプルファイルも除外 ===
+sample_output/
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# === OS / エディタ ===
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
