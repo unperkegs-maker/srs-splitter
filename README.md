@@ -11,15 +11,24 @@ LLMによる要約や改変は一切行わず、**原本を忠実に分割する
 
 ```
 out/
- ├─ index.html          目次（章階層ネスト + 章番号/タイトル/要求IDでの絞り込み検索）
- ├─ index.md            目次（Markdown）
- ├─ md/<番号>_<題>.md    項ごとの Markdown
- └─ html/<番号>_<題>.html 項ごとの HTML（要求IDにアンカー付与、目次へ戻る導線つき）
+ ├─ index.html              目次（章階層ネスト + 章番号/タイトル/要求IDでの絞り込み検索）
+ ├─ index.md                目次（Markdown）
+ ├─ md/<番号>_<題>.md        項ごとの Markdown
+ └─ html/<番号>_<題>.html    項ごとの HTML（要求IDにアンカー付与、目次へ戻る導線つき）
 ```
 
 - `index.html` の検索ボックスに `2.1` / `応答` / `REQ-1001` などを入れると目次が絞り込まれます。
 - 各項HTMLでは要求ID（既定では `REQ-####`）が強調表示され、`#REQ-1001` でジャンプできます。
 - 表（トレーサビリティ表など）は Markdown表 / HTML表に変換されます。
+
+## ファイル構成
+
+```
+srs-splitter/
+ ├─ convert.py        メインスクリプト
+ ├─ requirements.txt  依存パッケージ
+ └─ LICENSE
+```
 
 ## 必要環境
 
@@ -34,22 +43,7 @@ pip install -r requirements.txt
 
 ```bash
 python convert.py input.docx out/
-```
-
-同梱のダミー仕様書ですぐ試せます:
-
-```bash
-python convert.py sample_srs.docx out/
 # ブラウザで out/index.html を開く
-```
-
-`sample_output/` に、`sample_srs.docx` を変換した出力例を同梱しています
-（`sample_srs.docx` は実在しない架空のアンテナ要求です）。
-
-ダミー仕様書を作り直したい場合:
-
-```bash
-python make_dummy.py   # sample_srs.docx を再生成
 ```
 
 ## 実物に合わせた調整
@@ -79,11 +73,10 @@ REQID_RE = re.compile(r'\b(REQ-\d+)\b')
 ## ⚠️ 実データの取り扱い（重要）
 
 - このリポジトリには **実際の要求仕様書（実データ）を絶対にコミットしないでください。**
-- `.gitignore` で `*.docx` / `*.doc` と既定出力先 `out/`・`output/` を除外しています
-  （同梱のダミー `sample_srs.docx` と `sample_output/` のみ明示的に許可）。
+- `.gitignore` で `*.docx` / `*.doc` と既定出力先 `out/`・`output/` を除外しています。
 - 実物を変換する際は、出力先を `out/`（除外対象）にしておくと誤コミットを防げます。
 - 公開範囲（Private 必須かどうか等）は所属組織のデータ取扱い規程に従ってください。
 
 ## ライセンス
 
-MIT License（`LICENSE` 参照）。公開前に `LICENSE` の著作権者名を置き換えてください。
+MIT License（`LICENSE` 参照）。
